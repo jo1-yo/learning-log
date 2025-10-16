@@ -5,12 +5,17 @@ on:
     - cron: '0 14 * * *'  # 每天 UTC 14 点运行（纽约早上 10 点）
   workflow_dispatch:
 
+permissions:
+  contents: write   # ✅ 允许 actions 推送内容
+
 jobs:
   daily:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Create today's log
         run: |
@@ -37,7 +42,7 @@ jobs:
       - name: Commit & push
         run: |
           git config user.name "Jane Zhang (auto)"
-          git config user.email "206537458+jo1-yo@users.noreply.github.com"
+          git config user.email "206537458+jo1-yo@users.noreply.github.com"  
           git add .
           git commit -m "Auto log for $(date +"%Y-%m-%d")" || echo "Nothing new to commit"
           git push

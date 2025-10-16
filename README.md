@@ -1,0 +1,1 @@
+# Jane's Daily Log: Do the cognitive science debate today. The topic is whether AI should have the right to sue. I'm on the pro side. A classmate praised me after class even tho I think there are still a lot for me to improve.

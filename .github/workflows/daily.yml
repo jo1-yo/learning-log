@@ -1,0 +1,43 @@
+name: Daily Auto Journal
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # 每天 UTC 14 点运行（纽约早上 10 点）
+  workflow_dispatch:
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create today's log
+        run: |
+          TODAY=$(date +"%Y-%m-%d")
+          mkdir -p logs
+          FILE="logs/$TODAY.md"
+          if [ ! -f "$FILE" ]; then
+            echo "# Daily Journal — $TODAY" > "$FILE"
+            echo "" >> "$FILE"
+            echo "## What I learned today:" >> "$FILE"
+            echo "- " >> "$FILE"
+            echo "" >> "$FILE"
+            echo "## What I built or explored:" >> "$FILE"
+            echo "- " >> "$FILE"
+            echo "" >> "$FILE"
+            echo "## Reflections / thoughts:" >> "$FILE"
+            echo "- " >> "$FILE"
+            echo "" >> "$FILE"
+            echo "_Auto log created by GitHub Actions_" >> "$FILE"
+          else
+            echo "File already exists — skipping."
+          fi
+
+      - name: Commit & push
+        run: |
+          git config user.name "Jane Zhang (auto)"
+          git config user.email "206537458+jo1-yo@users.noreply.github.com"
+          git add .
+          git commit -m "Auto log for $(date +"%Y-%m-%d")" || echo "Nothing new to commit"
+          git push

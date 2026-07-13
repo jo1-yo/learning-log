@@ -2,11 +2,11 @@ name: Daily Auto Journal
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # 每天 UTC 14 点运行（纽约早上 10 点）
+    - cron: '0 14 * * *'  # everyday NYT 10AM
   workflow_dispatch:
 
 permissions:
-  contents: write   # ✅ 允许 actions 推送内容
+  contents: write   # ✅ allow pr
 
 jobs:
   daily:
